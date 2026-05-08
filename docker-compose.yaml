@@ -1,0 +1,25 @@
+services:
+  app:
+    container_name: app
+    build: .
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - .env.example
+    ports:
+      - "8888:8888"
+    depends_on:
+      - postgres
+  postgres:
+    container_name: database
+    image: postgres:16
+    environment:
+      POSTGRES_USER: megazord
+      POSTGRES_PASSWORD: megazord
+      POSTGRES_DB: megazord
+    ports:
+      - "5432:5432"
+    volumes:
+      - megazord_postgres_data:/var/lib/postgresql/data
+volumes:
+  megazord_postgres_data:
